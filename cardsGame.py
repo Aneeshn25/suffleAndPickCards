@@ -7,7 +7,7 @@ Initializing the classes
 color = color.color()
 classdeck = deck.Deck()
 
-print(color.GREEN + '\nWelcome to House of Cards!' + color.END)
+print(color.BOLD + color.GREEN + '\nWelcome to House of Cards!' + color.END)
 
 """
 Initializing the variables
@@ -16,63 +16,46 @@ deck = []
 deck_set = []
 chosen_card = []
 choice = 'y'
-design = "-" * 150
+design = "-" * 30
+round = 1
 
 """
 Printing the Deck by set basis
 """
 print("")
-print(color.YELLOW + design)
+print(color.YELLOW + design + color.END)
+print(color.BOLD + 'All cards in the deck' + color.END)
 print(color.BLUE + design + color.END)
+
 deck_set = classdeck.full_deck()
 for set in deck_set:
+    if set[0] == 'Ace':
+        print("")
+        print(color.BOLD + set[1] + color.END)
+        print(color.BLUE + design + color.END)
     print(set)
-print(color.BLUE + design)
+print("")
+
+print(color.BLUE + design + color.END)
 print(color.YELLOW + design + color.END)
 print("")
 
 """
-Mixing the sets to one whole deck of 52s
+A call to shuffle followed by 52 calls to dealOneCard() results in the caller being provided all 52 cards of the deck in a random order.
+If the caller then makes a 53rd call dealOneCard(), no card is dealt.
 """
-deck = classdeck.mixSets()
-shuffled = deck
-i = 1
-
-"""
-While Loop to run the pick if the user is interested to continue
-to let user choose the card from the shuffled deck and removes
-from it and contiues until the deck is empty.
-Error handinlins are also put in place
-"""
-while choice in ['y','Y']:
-    try:
-        shuffled = classdeck.shuffle(shuffled)
-        # card_num = random.randrange(0,len(shuffled)) + 1
-        # print('Pick a card by entering number between 1 to '+ str(len(shuffled)) +': ' + str(card_num)) # Uncomment to automate
-        print(color.PURPLE + 'Round: ' + str(i) + color.END)
-        i = i + 1
-        card_num = int(input(color.GREEN + 'Pick a card by entering number between 1 to '+ str(len(shuffled)) +': ' + color.END))  # Comment to automate
-        chosen_card = shuffled[card_num - 1]
-        print(color.DARKCYAN + "The card chosen: " + str(chosen_card) + color.END)
-        shuffled.remove(chosen_card)
-        print("")
-        if not shuffled:
-            print("Deck is now empty")
+try:
+    while True:
+        classdeck.shuffle()
+        card = classdeck.dealOneCard()
+        if card != "empty":
+            print(color.PURPLE + 'Round: ' + str(round) + color.END)
+            print(color.DARKCYAN + "The card chosen: " + str(card) + color.END)
+            print("")
+            round += 1
+        elif card == "empty":
+            print(color.BOLD + 'no card is dealt' + color.END)
+            print("")
             break
-        # choice = 'y' # Uncomment to automate
-        # Comment below 6 lines to automate
-        question = 'Do you wanna pick another one?(y/Y or n/N): '
-        choice = input(question)
-        while choice not in ['y', 'Y', 'n', 'N']:
-                print(color.RED + 'Please enter a valid pick intention' + color.END)
-                print("")
-                choice = input(question)
-    except IndexError:
-        print(color.RED + "Oops! you have entered a number out of range. Please try again..." + color.END)
-        print("")
-    except ValueError:
-        print(color.RED + "Oops!  That was no valid number.  Try again..." + color.END)
-        print("")
-    except Exception as e:
-        print(color.RED + "There is something wrong " + str(e) + color.END)
-        print("")
+except Exception as e:
+    print(color.RED + "There is something wrong in choosing the card: " + str(e) + color.END)

@@ -2,6 +2,7 @@
 # Made by Aneesh.
 
 import random
+from .color import color
 
 class Deck:
     def __init__(self):
@@ -11,8 +12,9 @@ class Deck:
         """
         self.suits = ["Spades","Hearts","Clubs","Diamonds"]
         self.card = []
-        self.set = []
         self.deck = []
+        self.shuffled = []
+        self.color = color()
         for suit in self.suits:
             for rank in range(1, 14):
                 if rank == 1:
@@ -27,10 +29,8 @@ class Deck:
                     rankName = rank
                 self.card.append(rankName)
                 self.card.append(suit)
-                self.set.append(self.card)
+                self.deck.append(self.card)
                 self.card = []
-            self.deck.append(self.set)
-            self.set = []
 
     def full_deck(self):
         """
@@ -38,46 +38,41 @@ class Deck:
         """
         return(self.deck)
 
-    def mixSets(self):
+    def shuffle(self):
         """
-        Returns a list that contains deck with out set array
-        """
-        try:
-            mixed = []
-            for set in self.deck:
-                for card in set:
-                    mixed.append(card)
-            return mixed
-        except Exception as e:
-            print("There is something wrong " + str(e))
-
-    def shuffle(self, deck):
-        """
-        This method will return a deck with suffled cards
+        Shuffle returns no value, but results in the cards in the deck being randomly permuted.
+        no usage of shuffle function
         """
         try:
-            shuffled = []
-            total_cards = len(deck)
+            total_cards = len(self.deck)
             if total_cards > 2:
                 for card_pos in range(total_cards):
                     shift_pos = random.randrange(0,total_cards)
-                    swap_a = deck[card_pos]
-                    swap_b = deck[shift_pos]
-                    deck[shift_pos] = swap_a
-                    deck[card_pos] = swap_b
-                shuffled = deck
+                    swap_a = self.deck[card_pos]
+                    swap_b = self.deck[shift_pos]
+                    self.deck[shift_pos] = swap_a
+                    self.deck[card_pos] = swap_b
             elif total_cards == 2:
                 choose_to_swap_2 = random.randrange(0,2)
                 if choose_to_swap_2 == 0:
-                    swap_a = deck[0]
-                    swap_b = deck[1]
-                    deck[0] = swap_b
-                    deck[1] = swap_a
-                    shuffled = deck
-                else:
-                    shuffled = deck
-            else:
-                shuffled = deck
-            return shuffled
+                    swap_a = self.deck[0]
+                    swap_b = self.deck[1]
+                    self.deck[0] = swap_b
+                    self.deck[1] = swap_a
         except Exception as e:
-            print("There is something wrong " + str(e))
+            print(self.color.RED + "There is something wrong in shuffle fuction: " + str(e) + color.END)
+
+    def dealOneCard(self):
+        """
+        This function should return one card from the deck to the caller.
+        """
+        try:
+            if not self.deck:
+                chosen_card = "empty"
+            else:
+                card_num = random.randrange(0,len(self.deck))
+                chosen_card = self.deck[card_num]
+                self.deck.remove(chosen_card)
+            return(chosen_card)
+        except Exception as e:
+            print(self.color.RED + "There is something wrong in dealOneCard function: " + str(e) + color.END)
