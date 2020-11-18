@@ -62,11 +62,11 @@ while choice in ['y','Y']:
         # choice = 'y' # Uncomment to automate
         # Comment below 6 lines to automate
         question = 'Do you wanna pick another one?(y/Y or n/N): '
-        choice = input(question)
+        choice = raw_input(question)
         while choice not in ['y', 'Y', 'n', 'N']:
                 print(color.RED + 'Please enter a valid pick intention' + color.END)
                 print("")
-                choice = input(question)
+                choice = raw_input(question)
     except IndexError:
         print(color.RED + "Oops! you have entered a number out of range. Please try again..." + color.END)
         print("")
