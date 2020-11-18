@@ -7,6 +7,7 @@ class Deck:
     def __init__(self):
         """
         Initializing all the variables and other elements
+        Also creates the full deck
         """
         self.suits = ["Spades","Hearts","Clubs","Diamonds"]
         self.card = []
@@ -41,26 +42,42 @@ class Deck:
         """
         Returns a list that contains deck with out set array
         """
-        mixed = []
-        for set in self.deck:
-            for card in set:
-                mixed.append(card)
-        return mixed
+        try:
+            mixed = []
+            for set in self.deck:
+                for card in set:
+                    mixed.append(card)
+            return mixed
+        except Exception as e:
+            print("There is something wrong " + str(e))
 
-    def shuffleDeck(self, deck):
+    def shuffle(self, deck):
         """
         This method will return a deck with suffled cards
         """
-        shuffled = []
-        total_cards = len(deck)
-        for card_pos in range(total_cards):
-            shift_pos = random.randrange(0,total_cards)
-            while shift_pos == card_pos:
-                shift_pos = random.randrange(0,total_cards)
-            swap_a = deck[card_pos]
-            swap_b = deck[shift_pos]
-            deck[shift_pos] = swap_a
-            deck[card_pos] = swap_b
-        shuffled = deck
-        return shuffled
-
+        try:
+            shuffled = []
+            total_cards = len(deck)
+            if total_cards > 2:
+                for card_pos in range(total_cards):
+                    shift_pos = random.randrange(0,total_cards)
+                    swap_a = deck[card_pos]
+                    swap_b = deck[shift_pos]
+                    deck[shift_pos] = swap_a
+                    deck[card_pos] = swap_b
+                shuffled = deck
+            elif total_cards == 2:
+                choose_to_swap_2 = random.randrange(0,2)
+                if choose_to_swap_2 == 0:
+                    swap_a = deck[0]
+                    swap_b = deck[1]
+                    deck[0] = swap_b
+                    deck[1] = swap_a
+                    shuffled = deck
+                else:
+                    shuffled = deck
+            else:
+                shuffled = deck
+            return shuffled
+        except Exception as e:
+            print("There is something wrong " + str(e))
