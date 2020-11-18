@@ -12,8 +12,6 @@ print(color.BOLD + color.GREEN + '\nWelcome to House of Cards!' + color.END)
 """
 Initializing the variables
 """
-deck = []
-deck_set = []
 design = "-" * 30
 round = 1
 
