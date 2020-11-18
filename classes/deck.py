@@ -13,7 +13,6 @@ class Deck:
         self.suits = ["Spades","Hearts","Clubs","Diamonds"]
         self.card = []
         self.deck = []
-        self.shuffled = []
         self.color = color()
         for suit in self.suits:
             for rank in range(1, 14):

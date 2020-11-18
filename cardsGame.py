@@ -14,8 +14,6 @@ Initializing the variables
 """
 deck = []
 deck_set = []
-chosen_card = []
-choice = 'y'
 design = "-" * 30
 round = 1
 
@@ -48,14 +46,14 @@ try:
     while True:
         classdeck.shuffle()
         card = classdeck.dealOneCard()
+        print(color.PURPLE + 'Round: ' + str(round) + color.END)
         if card != "empty":
-            print(color.PURPLE + 'Round: ' + str(round) + color.END)
             print(color.DARKCYAN + "The card chosen: " + str(card) + color.END)
             print("")
-            round += 1
         elif card == "empty":
             print(color.BOLD + 'no card is dealt' + color.END)
             print("")
             break
+        round += 1
 except Exception as e:
     print(color.RED + "There is something wrong in choosing the card: " + str(e) + color.END)
